@@ -1,0 +1,3 @@
+```
+awk -f one.awk input
+```
