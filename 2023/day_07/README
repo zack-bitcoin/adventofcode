@@ -1,3 +1,3 @@
 ```
-awk -f one.awk input
+sh one_files.sh
 ```
