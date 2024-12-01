@@ -1,25 +1,28 @@
-function gcd(p,q){return(q?gcd(q,(p%q)):p)}
+function gcd(p,q){
+    if(q){
+        return(gcd(q, p%q))
+    }
+    return(p)
+}
 
-
-BEGIN{
-    a = 11567
-    b = 14257
-    c = 19099
-    d = 16409
-    e = 12643
-    f = 21251
-
+function gmul(a, b){
     g = gcd(a, b)
     acc = a * b / g
-    g = gcd(acc, c)
-    acc = acc * c / g
-    g = gcd(acc, d)
-    acc = acc * d / g
-    g = gcd(acc, e)
-    acc = acc * e / g
-    g = gcd(acc, f)
-    acc = acc * f / g
+    return(a)
+}
+function gmul_fold(a, start, end, acc2){
+    if(start> end){return(acc2)}
+    b = a[start]
+    return(gmul_fold(a, start+1, end, acc2 * b / gcd(acc2, b)))
+}
 
-    print(acc)
+BEGIN{
+    a[1] = 11567
+    a[2] = 14257
+    a[3] = 19099
+    a[4] = 16409
+    a[5] = 12643
+    a[6] = 21251
+    print(gmul_fold(a, 1, 6, 1))
 
 }
