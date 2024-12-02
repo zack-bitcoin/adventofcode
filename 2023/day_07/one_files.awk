@@ -1,4 +1,5 @@
 
+
 function letter2number(letter){
     if(letter ~ /[2-9]/){
         return(letter+0)
