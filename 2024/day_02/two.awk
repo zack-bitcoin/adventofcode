@@ -29,7 +29,7 @@ function decreasing(a, m,        i){
     return(1)
 }
 function monotonic(a, m){
-    if(a[2] > a[1]){
+    if(a[m] > a[1]){
         return(increasing(a, m))
     }
     return(decreasing(a, m))
