@@ -14,22 +14,12 @@ function obeys_rules(s,     m, a) {
     }
     return(1)
 }
-
-
 /\|/ {
     RulesString = RulesString ":" $0
 }
-
 /,/ {
     if(obeys_rules($0)){
-        #print("obeys: " $0)
         sum += middle_number($0)
-    } else {
-        #print("fails: " $0)
     }
 }
-
-
-END {
-    print(sum)
-}
+END { print(sum) }

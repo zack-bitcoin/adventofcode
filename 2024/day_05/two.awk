@@ -32,22 +32,13 @@ function fix_order(s,      m, a, i, j, temp, result){
     }
     return(result)
 }
-
-
 /\|/ {
     RulesString = RulesString ":" $0
 }
-
 /,/ {
     if(obeys_rules($0)){
-        #print("obeys: " $0)
     } else {
-        #print("fails: " $0)
-        #print(fix_order($0))
         sum += middle_number(fix_order($0))
     }
 }
-
-END{
-    print(sum)
-}
+END{ print(sum) }
