@@ -47,7 +47,7 @@ function walk(row, col, direction, steps,      l){
 }
 
 BEGIN {
-    MAX_LOOPS = 50000
+    MAX_LOOPS = 10000
 }
 
 {
@@ -71,16 +71,15 @@ END{
             visited_original[i, j] = visited[i, j]
         }
     }
-    print("start " start_row " " start_col)
-    print(NR " " cols)
+    print("starting position: " start_row " " start_col)
+    print("size: " NR " " cols)
     for(i=1; i<=NR; i++){
-        print("is " i "/" NR)
+        print("testing looping in row " i "/" NR)
         for(j=1; j<=cols; j++){
             if((visited_original[i, j] == 1) && (substr(Map[i], j, 1) == ".")){
                 Map[i] = substr(Map[i], 1, j-1) "#" substr(Map[i], j+1, length(Map[i]) - j)
                 if(walk(start_row, start_col, "up", 0) == MAX_LOOPS){
                     sum+= 1
-                    print("loop " i " " j)
                 }
                 Map[i] = substr(Map[i], 1, j-1) "." substr(Map[i], j+1, length(Map[i]) - j)
             } 

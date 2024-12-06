@@ -2,10 +2,7 @@ function walk(row, col, direction, steps,      l){
     #print("walk " row " " col " " direction)
     if(((row+0 < 1) || ((row+0) > NR)) ||
        ((col+0 < 1) || (col+0 > cols+0))){
-        print("out of bounds " row " " col)
-        print(row+0 < 1)
-        print(col+0 < 1)
-        print(col+0 < cols+0)
+        #print("out of bounds " row " " col)
         return(0)
     }
     visited[row, col] = 1
@@ -58,8 +55,8 @@ function walk(row, col, direction, steps,      l){
     }
 }
 END{
-    print("start " start_row " " start_col)
-    print(NR " " cols)
+    print("starting position: " start_row " " start_col)
+    print("size: " NR " " cols)
     visited[start_row, start_col] = 1
     walk(start_row, start_col, "up", 0)
     sum = 0
@@ -73,7 +70,7 @@ END{
                 s = s "."
             }
         }
-        print(s)
+        #print(s)
     }
     print(sum)
 }
