@@ -38,6 +38,7 @@ function monotonic(a, m){
     m = split($0, a, " ")
     if(step_size_check(a, m) && monotonic(a, m)){
         sum+=1
+    }
 }
 
 END{ print(sum)}
