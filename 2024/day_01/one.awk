@@ -35,4 +35,5 @@ END{
         b = $0
         sum += diff(a, b)
     }
+    print(sum)
 }
