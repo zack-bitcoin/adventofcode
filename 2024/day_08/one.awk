@@ -33,7 +33,8 @@ END{
             col2 = y2[2]
             if((row == row2) && (col == col2)){
                 #antenna don't create antinodes with themselves.
-            } else if(Antenna[x2[1], x2[2]] == Antenna[y2[1], y2[2]]) {
+            } else if(Antenna[row, col] == Antenna[row2, col2]) {
+                #antenna are the same letter, so they potentially create antinodes together.
                 rdiff = row2 - row
                 cdiff = col2 - col
                 row3 = row2 + rdiff
