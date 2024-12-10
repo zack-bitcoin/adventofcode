@@ -140,7 +140,7 @@ END {
             sum += (i*x)
         }
     }
-    #print(s)
+    print(s)
     print("result: " sum)
 }
 
