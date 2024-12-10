@@ -106,6 +106,21 @@ function compact(reverse_disk, disk,      s){
     }
     return(disk)
 }
+function decode_disk(disk,      s, r, type){
+    r = ""
+    while(match(disk, thing_regex)){
+        s = substr(disk, RSTART, RLENGTH)
+        match(s, /[a-z]+/)
+        type = substr(s, RSTART, RLENGTH),
+        if(type == "file"){
+            1
+        } else if(type == "space"){
+            2
+        } else {
+            print("decode failure")
+        }
+    }
+}
 
 END {
     print("END")
@@ -113,5 +128,6 @@ END {
 #    print(disk)
 #    print(reverse_disk)
     compacted_disk = compact(reverse_disk, disk)
-    print(compacted_disk)
+    file = decode_disk(compacted_disk)
+    print(file)
 }
