@@ -1,0 +1,48 @@
+-module(two).
+-export([doit/0]).
+
+blink_times(0, X) -> X;
+blink_times(N, X) when N > 0-> 
+    io:fwrite(integer_to_list(N)),
+    io:fwrite(" "),
+    io:fwrite(integer_to_list(length(X))),
+    io:fwrite("\n"),
+    %blink_times(N-1, blink(X)).
+    blink_times(N-1, blink2(X, [])).
+
+
+blink2([], Acc) -> lists:reverse(Acc);
+blink2([0|T], Acc) -> blink2(T, [1|Acc]);
+blink2([N|T], Acc) -> 
+    S = integer_to_list(N),
+    L = length(S),
+    if
+        ((L rem 2) == 0) ->
+            {A, B} = lists:split(L div 2, S),
+            blink2(T, [list_to_integer(B), list_to_integer(A)|Acc]);
+        true ->
+            blink2(T, [N*2024|Acc])
+%            [N*2024|blink(T)]
+    end.
+    
+
+blink([]) -> [];
+blink([0|T]) -> [1|blink(T)];
+blink([N|T]) -> 
+    S = integer_to_list(N),
+    L = length(S),
+    if
+        ((L rem 2) == 0) ->
+            {A, B} = lists:split(L div 2, S),
+            [list_to_integer(A), list_to_integer(B)|blink(T)];
+        true ->
+            [N*2024|blink(T)]
+    end.
+
+doit() ->
+
+    Input = [8793800, 1629, 65, 5, 960, 0, 138983, 85629],
+    X = [125, 17],
+    X2 = blink_times(75, Input),
+    length(X2).
+

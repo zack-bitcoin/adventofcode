@@ -75,6 +75,7 @@ function try_insert_earlier_b(s, disk,        i, m, starting_location, many, fil
                 #disk = substr(disk, 1, prev_pointer) "; file " file_id " " many " " starting_space extra_space "; " substr(disk, disk_pointer)
                 disk2 = ""
                 for(j=1; j<=m; j++){
+                    if((!(j == i)) &&( 
                     disk2 = disk2 ";" d[j] 
                 }
                 print(disk2)
