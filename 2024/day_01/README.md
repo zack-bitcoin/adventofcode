@@ -3,6 +3,10 @@
 ```
 
 ```
+./two.pl input
+```
+
+```
 awk -f one.awk input
 ```
 
