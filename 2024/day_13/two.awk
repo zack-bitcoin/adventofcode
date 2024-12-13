@@ -2,7 +2,7 @@
 #fewest tokens to win all prizes.
 #A costs 3, B costs 1.
 
-function cost(AX, AY, BX, BY, X, Y,        V, CX, CY){
+function cost(AX, AY, BX, BY, X, Y,        V, VT, VB, U){
 
     #choose U and V such that AX*U + BX*V = X and AY*U + BY*V = Y
 
@@ -11,13 +11,6 @@ function cost(AX, AY, BX, BY, X, Y,        V, CX, CY){
 
     # AY*U = Y - BY*U
     # U = (Y - BY*Y)/AY
-
-    # (X - BX*V)/AX = (Y - BY*V)/AY
-    # (X - BX*V)/(Y - BY*V) = AX/AY
-
-
-    # U = (X - BX*V)/AX
-    # U = (Y - BY*V)/AY
 
     #(X - BX*V)/AX = (Y - BY*V)/AY
     #(X - BX*V)*AY = (Y - BY*V)*AX
@@ -29,11 +22,9 @@ function cost(AX, AY, BX, BY, X, Y,        V, CX, CY){
     VT = ((X*AY) - (Y*AX))
     VB = ((BX*AY) - (BY*AX))
 
-    #print("V round: " VT % VB " " VT " " VB)
-    V = int(VT/VB)
-
-    if((VT % VB) == 0){
-        if(((Y - (BY*V)) % AY) == 0) {
+    if((VT % VB) == 0){#check that V is an integer
+        V = int(VT/VB)
+        if(((Y - (BY*V)) % AY) == 0) {#check that U is an integer
             U = int((Y - (BY*V)) / AY)
             return((U*3) + V)
         }
