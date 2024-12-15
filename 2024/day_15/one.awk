@@ -50,12 +50,8 @@ function robo_step(path, row, col, drow, dcol){
     }
 }
 function robo_walk(path, row, col,       step, drow, dcol, spot, p){
-    #print("robo walk")
-    #display(row, col)
-    #print("")
     Map[row, col] = "."
     if(path == ""){
-        #print("done walking")
         return(0)
     }
     step = substr(path, 1, 1)
@@ -114,12 +110,10 @@ function push(row, col, drow, dcol){
 }
 
 function gps_sum(      sum, i, j){
-    print("gps sum")
     sum = 0
     for(i=1; i<=rows; i++){
         for(j=1; j<=cols; j++){
             if(Map[i, j] == "O"){
-                #print("found a box")
                 sum = sum + ((100 * (i-1)) + (j-1))
             }
         }
@@ -132,7 +126,7 @@ END {
     s = directions
     rows = row
     robo_walk(s, robo_row_start, robo_col_start)
-    display()
+    #display()
     sum = gps_sum()
     print(sum)
 }

@@ -2,7 +2,6 @@ function widen(map0, map1){
     for(i=1; i<=rows; i++){
         for(j=1; j<=cols; j++){
             c1 = map0[i, j]
-            #print("widen " i " " j " " c1)
             if(c1 == "#"){
                 map1[i, j*2 -1] = "#"
                 map1[i, (j*2)] = "#"
@@ -22,7 +21,6 @@ function widen(map0, map1){
 }
 
 function display(robo_row, robo_col,       i, s, j) {
-    print("display")
     for(i=1; i<=rows; i++){
         s = ""
         for(j=1; j<=cols; j++){
@@ -39,9 +37,6 @@ function display(robo_row, robo_col,       i, s, j) {
     }
 }
 function robo_walk(path, row, col){
-    #print("robo walk " path)
-    #display(row, col)
-    #print("")
     Map[row, col] = "."
     if(path == ""){
         return(0)
@@ -74,21 +69,13 @@ function robo_walk(path, row, col){
     return(robo_walk(substr(path, 2, length(path)), row, col))
 }
 function pushable(row, col, drow, dcol,      spot, spot2){
-    #print("pushable " row " " col " " drow " "dcol " " Map[row, col] " "Map[row + drow, col + dcol])
     if(Map[row, col] == "]"){
         #0 indice is the left side of the box.
         return(pushable(row, col-1, drow, dcol))
     }
-#    if(!((Map[row, col] == "[") || (Map[row, col] == "]"))){
-#        print(row " " col " "drow " "dcol " "Map[row, col])
-#        display()
-#        print("pushable failure 2")
-#        return(-1000)
-#    }
     if(drow == 0){ #moving left to right can only touch one other box.
         spot = Map[row, col-1]
         spot2 = Map[row, col+2]
-        #if(spot == "."){return(1)}
         if((dcol == -1) && (spot == ".")){return(1)}
         if((dcol == 1) && (spot2 == ".")){return(1)}
         if((dcol == -1) && (spot == "]")){
@@ -99,12 +86,10 @@ function pushable(row, col, drow, dcol,      spot, spot2){
         }
         if((dcol == -1) &&(spot == "#")){return(0)}
         if((dcol == 1) &&(spot2 == "#")){return(0)}
-        #print("pushable failure " row " " col " " drow " " dcol)
         return(-1000)
     } else if(dcol == 0){ #moving up/down can touch 2 other boxes.
         spot = Map[row+drow, col+dcol]
         spot2 = Map[row+drow, col+dcol+1]
-        #print("pushable up/down " spot " " spot2)
         if((spot == ".") && (spot2 == ".")){ return(1)}
         if((spot == "#") || (spot2 == "#")){return(0)}
         if((spot == ".")){return(pushable(row+drow, col+dcol+1, drow, dcol))}
@@ -119,7 +104,6 @@ function push(row, col, drow, dcol){
         return(push(row, col-1, drow, dcol))
     }
     if(!(Map[row, col] == "[")){
-        #print("push failure " row " " col " "drow " " dcol " "Map[row, col])
         return(0)
     }
     spot = Map[row + drow, col+dcol]
@@ -156,7 +140,6 @@ function push(row, col, drow, dcol){
             Map[row+drow, col+dcol] = "["
             Map[row+drow, col+dcol+1] = "]"
         }else if((spot == ".")){
-            #print("here " spot" " spot2 " " (spot2 == ".") " "  row " " col " " drow " " dcol)
             Map[row, col] = "."
             Map[row, col+1] = "."
             push(row+drow, col+1, drow, dcol)
@@ -227,6 +210,4 @@ END {
     #display()
     sum = gps_sum()
     print(sum)
-    #sum = gps_sum()
-    #print(sum)
 }
