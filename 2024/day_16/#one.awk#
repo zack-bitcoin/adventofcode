@@ -37,7 +37,6 @@ END{
     c = distances[end_y, end_x, 0, 1]
     d = distances[end_y, end_x, 0, -1]
     print(minimum(minimum(a, b), minimum(c, d)))
-    #print(distance3(start_y, start_x, direction_y, direction_x, filled))
 }
 
 function calc_distances(y, x, dy, dx, d, distances){
