@@ -2,7 +2,15 @@ function add_to_pairs(a, b){
     Pairs[a] = Pairs[a] " " b
     Pairs[b] = Pairs[b] " " a
 }
-
+function size2(EP,        filled){
+    if(node in filled){return(0)}
+    filled[node] = 1
+    m = split(EP, EP2, ";")
+    for(i=1; i<=m; i++){
+        split(m[i], p, " ")
+        
+    }
+}
 function size(node, r, Pairs2,       filled, P, s){
     if(node in filled){
         return(r)
@@ -19,6 +27,12 @@ function size(node, r, Pairs2,       filled, P, s){
         return(r)
     }
 }
+function print_pairs(){
+    print("print pairs")
+    for(i in Pairs){
+        print(Pairs[i])
+    }
+}
 
 {
     s = $0
@@ -32,36 +46,56 @@ function size(node, r, Pairs2,       filled, P, s){
         Nodes[b[i]] = 1
     }
 }
-END {
-    Size = size(key, 0, Pairs)
-    #print(key)
-    print(Size)
+function expand(Pairs,        EP, i, m, j){
     for(i in Pairs){
-        for(j in Pairs){
-            for(k in Pairs){
+        m = split(Pairs[i], L, " ")
+        for(j=1; j<=m; j++){
+            EP = EP";"i " " L[j]
+        }
+    }
+    return(EP)
+}
+END {
+    #print_pairs()
+    #Size = size(key, 0, Pairs)
+    #print(key)
+    #print(Size)
+    print_pairs()
+
+    EP = expand(Pairs)
+    print(EP)
+    m = split(EP, EP2, ";")
+    print("many pairs: " m)
+    for(i=1; i<=m; i++){
+        for(j=1; j<=m; j++){
+            for(k=1; k<=m; k++){
                 if((!(i == j)) && (!(i == k)) && (!(j == k))){
-                    #print("triple")
-                    build_pairs(i,j,k, Pairs2)
-                    #print("triple size")
-                    Size2 = size(key, 0, Pairs2)
-                    print("size " Size2)
-                    if(Size2 < Size-3){
-                        print(i, j, k, Size, Size2, Size2 * (Size - Size2))
-                    }
+                    EP3 = build_pairs2(i, j, k, EP2, m)
+                    #print(EP3)
+                    print(size2(EP3))
                 }
             }
         }
     }
-    print(key)
 }
+
+function build_pairs2(a, b, c, EP, m,      i){
+    r = ""
+    for(i = 0; i<=m; i++){
+        if((!(i ==a)) && (!(i == b)) && (!(i ==c))){
+            r = r ";" EP[i]
+        }
+    }
+    return(r)
+}
+
 
 function build_pairs(a, b, c, Pairs2,      i){
     for(i in Pairs){
-        print(
         if((i == a) || (i == b) || (i == c)){
             delete Pairs2[i]
         } else {
-            Pairs2[i] = 1
+            Pairs2[i] = Pairs[i]
         }
     }
 }
