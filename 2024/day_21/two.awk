@@ -1,47 +1,25 @@
+function unpack(s, arr,       a, m){
+    m = split(s, a, ";")
+    for(i=1; i<=m; i++){
+        split(a[i], a2, " ")
+        arr[a2[1]""] = a2[2]+0
+    }
+}
 
-#disallowed, numeric_row = 4, numeric_col = 1
-#disallowed, direction_row = 1, direction_col = 1
 BEGIN {
-    numeric_row["7"] = 1
-    numeric_row["8"] = 1
-    numeric_row["9"] = 1
-    numeric_row["4"] = 2
-    numeric_row["5"] = 2
-    numeric_row["6"] = 2
-    numeric_row["1"] = 3
-    numeric_row["2"] = 3
-    numeric_row["3"] = 3
-    numeric_row["0"] = 4
-    numeric_row["A"] = 4
-    numeric_col["7"] = 1
-    numeric_col["8"] = 2
-    numeric_col["9"] = 3
-    numeric_col["4"] = 1
-    numeric_col["5"] = 2
-    numeric_col["6"] = 3
-    numeric_col["1"] = 1
-    numeric_col["2"] = 2
-    numeric_col["3"] = 3
-    numeric_col["0"] = 2
-    numeric_col["A"] = 3
+    numeric_rows = "7 1;8 1;9 1;4 2;5 2;6 2;1 3;2 3;3 3;0 4;A 4"
+    numeric_cols = "7 1;8 2;9 3;4 1;5 2;6 3;1 1;2 2;3 3;0 2;A 3"
+    direction_rows = "^ 1;A 1;< 2;v 2;> 2"
+    direction_cols = "^ 2;A 3;< 1;v 2;> 3"
 
-    direction_row["^"] = 1
-    direction_row["A"] = 1
-    direction_row["<"] = 2
-    direction_row["v"] = 2
-    direction_row[">"] = 2
-
-    direction_col["^"] = 2
-    direction_col["A"] = 3
-    direction_col["<"] = 1
-    direction_col["v"] = 2
-    direction_col[">"] = 3
+    unpack(numeric_rows, numeric_row)
+    unpack(numeric_cols, numeric_col)
+    unpack(direction_rows, direction_row)
+    unpack(direction_cols, direction_col)
 }
 {
-    print("line " NR)
     kp = keypad_process($0, 3,4)
-    print("kp: " kp)
-    min_code = length_after_expanding(kp, 25)
+    min_code = length_after_expanding(kp, 2)
     match($0, /[0-9]+/)
     numeric_part = substr($0, RSTART, RLENGTH)
     sum += (min_code * numeric_part)
@@ -52,6 +30,7 @@ END {
 }
 
 function length_after_expanding(l, times,       m, a, r, len, i){
+    #l is a list of sequences of button presses. We need to handle each sequence, and return the lowest of them all.
     m = split(l, a, ";")
     r = 100000000000000000
     for(i=1; i<=m; i++){
@@ -65,34 +44,34 @@ function min(a, b){
     return(b)
 }
 function length_after_expanding2(s, times,     m, a, r, code, i){
+    #s is a sequence of button presses. we want to chop it up into individual button presses.
     m = split(s, a, "A")
     r = 0
     for(i=1; i<=m-1; i++){
         code = a[i] "A"
-        r += length_after_expanding3(code, times)
+        r += expand_button_times(code, times)
     }
     return(r)
 }
-function length_after_expanding3(code, times,     code2, r){
+function expand_button_times(code, times,     code2, r){
     if(times == 0){
         return(length(code))
     }
     if((code, times) in LAE){
         return(LAE[code, times])
     }
-    code2 = expand(code)
+    code2 = expand_button(code)
     r = length_after_expanding(code2, times-1)
     LAE[code, times] = r
     return(r)
 }
-function expand(kp,      m, kp2, i){
+function expand_button(kp,      m, kp2, i){
     m = split(kp, kpb, ";")
     kp2 = ""
     for(i=1; i<=m; i++){
         kp2 = kp2 ";" direction_process(kpb[i], 3, 1)
     }
     kp2 = substr(kp2, 2, length(kp2))
-    #kp2 = keep_shortest(kp2)
     return(kp2)
 }
 
@@ -111,6 +90,7 @@ function keypad_process(s, keypad_col, keypad_row,      letter, p, i, r){
 }
 function paths_to(letter, keypad_col, keypad_row,     case1,case2, col, row){
     if((keypad_row == 4) && (keypad_col == 1)){
+#disallowed, numeric_row = 4, numeric_col = 1
         #print("dead path")
          return(0)
     }
@@ -184,6 +164,7 @@ function direction_process(s, keypad_col, keypad_row,     letter, p, i, r){
 function direction_paths_to(letter, keypad_col, keypad_row,       case1, case2, times, letters){
     #print("direction paths to " letter, keypad_col, keypad_row)
     if((keypad_row == 1) && (keypad_col == 1)){
+#disallowed, direction_row = 1, direction_col = 1
         #print("dead path")
          return(0)
     }

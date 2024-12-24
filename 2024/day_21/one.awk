@@ -12,6 +12,7 @@ BEGIN {
     numeric_row["3"] = 3
     numeric_row["0"] = 4
     numeric_row["A"] = 4
+
     numeric_col["7"] = 1
     numeric_col["8"] = 2
     numeric_col["9"] = 3
