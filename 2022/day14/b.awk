@@ -80,15 +80,12 @@ function simulate(x, y){
         filled[x][y] = 2
         return(1)
     }
-    if(filled[x][y+1] == 0){
+    if(filled[x][y+1] == 0)
         return(simulate(x, y+1))
-    }
-    if(filled[x-1][y+1] == 0){
+    if(filled[x-1][y+1] == 0)
         return(simulate(x-1, y+1))
-    }
-    if(filled[x+1][y+1] == 0){
+    if(filled[x+1][y+1] == 0)
         return(simulate(x+1, y+1))
-    }
     if((x == 500) && (y == 0)){
         done = 1
         return(0)
@@ -96,7 +93,6 @@ function simulate(x, y){
     filled[x][y] = 2
     return(1)
 }
-
 END {
     FLOOR = maxy
     steps = 50
