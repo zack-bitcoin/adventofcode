@@ -1,0 +1,33 @@
+BEGIN{
+    letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+}
+
+{
+    l = length($0)
+    h = int(l / 2)
+    #print(substr($0, 1, h), " _ ", substr($0, h+1, h))
+    c = common_letter(substr($0, 1, h), substr($0, h+1, h))
+    total += priority(c)
+}
+
+function is_in(letter, string){
+    return(match(string, letter))
+}
+
+function common_letter(a, b){
+    first = substr(a, 1, 1)
+    bool = is_in(first, b)
+    if(bool) {
+        return(first)
+    }
+    return(common_letter(substr(a, 2), b))
+}
+
+function priority(x){
+    match(letters, x)
+    return(RSTART)
+}
+
+END{
+    print(total)
+}
