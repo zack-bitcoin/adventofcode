@@ -7,13 +7,13 @@ BEGIN{
         }
     }
     maxy = 0
+    minx = 10000000
+    maxx = 0
 }
-
 function max(a, b){
     if(a>b){return (a)}
     return(b)
 }
-
 {
     Steps = split($0, A, " -> ")
     split(A[1], B, ",")
@@ -24,10 +24,11 @@ function max(a, b){
         x = B[1]
         y = B[2]
         maxy = max(y, maxy)
+        maxx = max(x, maxx)
+        minx = min(x, minx)
         if(y == prevy){
             r = abs(x - prevx)
             for(j=0; j<=r; j++){
-                #print("horizontal " y, min(x, prevx)+j)
                 filled[min(x, prevx)+j][y] = 1
             }
         } else if(x == prevx){
@@ -43,33 +44,41 @@ function max(a, b){
         prevy = y
     }
 }
-
-function display(){
-    for(y=-1; y<=10; y++){
-        s = ""
-        for(x=490; x<=510; x++){
-            if(filled[x][y] == 1){
-                s = s "#"
-            } else if(filled[x][y] == 2) {
-                s = s "o"
-            } else {
-                s = s "."
-            }
-        }
-        print(s)
+function make_image(frame_number,      width, height, s, y, x, f, color){
+    width = maxx - minx + 15
+    height = FLOOR + 2
+    if((height % 2) == 1){
+        height += 1
     }
+    if((width % 2) == 1){
+        width += 1
+    }
+    s = "# ImageMagick pixel enumeration: "width","height",255,srgb\n"
+    for(y=0; y<height; y++){
+        for(x=0; x<width; x++){
+            f = filled[x+minx-6][y-1]
+            if(f == 1){#rock
+                color = ": (0,0,0)  #000000  srgb(0,0,0)"
+            } else if(f == 2){#sand
+                color = ": (128,128,128)  #808080  srgb(80,80,80)"
+            } else {#air
+                color = ": (255,255,255)  #FFFFFF  srgb(255,255,255)"
+            }
+            s = s x","y color"\n"
+        }
+    }
+    filename = "frame" (1000 + frame_number)
+    print(s) > (filename ".txt")
+    system("convert "filename".txt "filename".jpg")
 }
 
 function add_sand(){
     simulate(500, 0)
 }
 function simulate(x, y){
-    #print("simulate " x " " y " " filled[x][y+1])
     if(y >= FLOOR+1){
         filled[x][y] = 2
         return(1)
-        #done = 1
-        #return(0)
     }
     if(filled[x][y+1] == 0){
         return(simulate(x, y+1))
@@ -84,24 +93,26 @@ function simulate(x, y){
         done = 1
         return(0)
     }
-    #print("fill " x " " y " " filled[x][y])
     filled[x][y] = 2
     return(1)
 }
 
 END {
     FLOOR = maxy
-    #print("")
+    steps = 50
     done = 0
     while(!done){
-        #print("loop")
         add_sand()
+        if((sands % steps) == 0){
+            print("step " sands)
+            make_image(int(sands / steps))
+        }
         sands += 1
     }
     print(sands)
-    #start pouring in sand at 0,500
+    system("convert -delay 10 -loop 0 frame*.jpg sand.mp4")
+    system("rm frame*")
 }
-
 function min(a, b){
     if(a < b){return(a)}
     return(b)
