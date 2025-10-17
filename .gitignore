@@ -20,3 +20,7 @@ _checkouts/
 #*
 .#*
 input
+*.mp4
+*.jpg
+*.txt
+*.gif
