@@ -53,18 +53,22 @@ function make_image(frame_number,      width, height, s, y, x, f, color){
     if((width % 2) == 1){
         width += 1
     }
-    s = "# ImageMagick pixel enumeration: "width","height",255,srgb\n"
+    #s = "P3\n"width " " height"\n255\n"
+    s = "P2\n"width " " height"\n2\n"
     for(y=0; y<height; y++){
         for(x=0; x<width; x++){
             f = filled[x+minx-6][y-1]
             if(f == 1){#rock
-                color = ": (0,0,0)  #000000  srgb(0,0,0)"
+                #color = "0 0 0"
+                color = "0"
             } else if(f == 2){#sand
-                color = ": (128,128,128)  #808080  srgb(80,80,80)"
+                #color = "128 128 128"
+                color = "1"
             } else {#air
-                color = ": (255,255,255)  #FFFFFF  srgb(255,255,255)"
+                #color = "255 255 255"
+                color = "2"
             }
-            s = s x","y color"\n"
+            s = s color "\n"
         }
     }
     filename = "frame" (1000 + frame_number)

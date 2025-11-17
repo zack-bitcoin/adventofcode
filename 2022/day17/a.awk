@@ -1,0 +1,210 @@
+#1:26:32
+
+
+BEGIN{
+    highest = 0
+    many_rocks = 1000000000000
+    #many_rocks = 8
+    #- + J | o
+}
+{
+    jet_cycle = length($0)
+    for(i=1; i<=length($0); i++){
+        l = substr($0, i, 1)
+        db[i] = l
+    }
+}
+
+END{
+    jet_step = 1
+    for(i = 1; i<=many_rocks; i++){
+        rock = make_rock(i)
+        #display_map(rock)
+        gravity(rock)
+        #display_map("")
+    }
+    print("highest rock: " highest)
+}
+
+function display_map(rock,       y, s, x){
+    for(y=highest+6; y>0; y--){
+        s = ""
+        for(x=1; x<=7; x++){
+            if((y in map)&&(x in map[y])){
+                s = s "#"
+            } else if(in_rock(y, x, rock)){
+                s = s "@"
+            } else {
+                s = s "." 
+            }
+        }
+        print(s)
+    }
+}
+function make_rock(n,        y, x, rock_type, i){
+    #print("jet cycle " jet_cycle)10091
+    #if((n%(5*jet_cycle)) == 0){
+    #highest(n) = 7 + 
+    #608 + 1000000 div 1400
+#make rock 52455 82070 78958
+#make rock 102910 161038 78968
+#make rock 153365 240016 78978
+#make rock 203820 319009 78993
+#make rock 254275 397969 78960
+#make rock 304730 476938 78969
+#make rock 355185 555914 78976
+#make rock 405640 634907 78993
+#make rock 456095 713867 78960
+#make rock 506550 792834 78967
+#make rock 557005 871813 78979
+#make rock 607460 950802 78989
+#make rock 657915 1029763 78961
+#make rock 708370 1108731 78968
+#make rock 758825 1187713 78982
+#make rock 809280 1266699 78986
+#make rock 859735 1345660 78961
+#make rock 910190 1424627 78967
+#make rock 960645 1503612 78985
+#make rock 1011100 1582597 78985
+#make rock 1061555 1661554 78957
+#make rock 1112010 1740522 78968
+#make rock 1162465 1819506 78984
+#make rock 1212920 1898493 78987
+#make rock 1263375 1977446 78953
+#make rock 1313830 2056419 78973
+#make rock 1364285 2135405 78986
+#make rock 1414740 2214388 78983
+#make rock 1465195 2293344 78956
+#make rock 1515650 2372316 78972
+#make rock 1566105 2451303 78987
+#make rock 1616560 2530287 78984
+#make rock 1667015 2609245 78958
+#make rock 1717470 2688208 78963
+#make rock 1767925 2767201 78993
+#make rock 1818380 2846185 78984
+#make rock 1868835 2925142 78957
+    #if((n%(jet_cycle*5*4)) == 2000){
+    if((n%(jet_cycle*5)) == 1){
+        print("make rock " n, highest, (highest - previous_highest))
+        previous_highest = highest
+    }
+    y = highest+4
+    x = 3
+    rock_type = (n % 5)
+    liverock = ""
+    if(rock_type == 1){#-
+        for(i=x; i<x+4; i++){
+            liverock = liverock";"y","i
+        }
+        liverock = substr(liverock, 2)
+    } else if(rock_type == 2){#+
+        liverock = (y+1)","x";"y","(x+1)";"(y+1)","(x+1)";"(y+1)","(x+2)";"(y+2)","(x+1)
+    } else if(rock_type == 3){
+        liverock = y","x";"y","(x+1)";"y","(x+2)";"(y+1)","(x+2)";"(y+2)","(x+2)
+    } else if(rock_type == 4){
+        liverock = y","x";"y+1","x";"y+2","x";"y+3","x
+    } else if(rock_type == 0){
+        liverock = y","x";"y+1","x";"y","x+1";"y+1","x+1
+    }
+    return(liverock)
+}
+function in_rock(y, x, rock,       i, P, A, B){
+#    print("in rock")
+    P = split(rock, A, ";")
+    for(i=1; i<=P; i++){
+        split(A[i], B, ",")
+        if((B[1] == y)&&(B[2] == x)){
+            return(1)
+        }
+    }
+    return(0)
+}
+function gravity(rock){
+    #display_map(rock)
+    if(!(rock)){
+        return(0)
+    }
+    #print(rock)
+    #print("gravity " jet_step)
+    if(db[jet_step] == "<"){
+        if(gravity_check(rock, 0, -1)){
+            #move left
+            rock = advance(rock, 0, -1)
+        }
+    } else if(db[jet_step] == ">"){
+        if(gravity_check(rock, 0, 1)){
+            #move right
+            rock = advance(rock, 0, 1)
+        }
+    } else {
+        print("impossible error")
+        error()
+    }
+    jet_step = (jet_step + 1) % jet_cycle
+    if(jet_step == 0){
+        jet_step = jet_cycle
+    }
+    #print("before gravity check " rock)
+    if(gravity_check(rock, 1, 0)){
+        rock2 = advance(rock, 1, 0)
+        return(gravity(rock2))
+    } else {
+        update_highest(rock)
+        return(draw_to_map(rock))
+    }
+}
+function max(a, b){
+    return((a > b) ? a : b)
+}
+function update_highest(rock,      M, A, i, B, y){
+    #print("update highest")
+    M = split(rock, A, ";")
+    for(i=1; i<=M; i++){
+        split(A[i], B, ",")
+        y = B[1]
+        highest = max(highest, y)
+    }
+}
+function draw_to_map(rock,      M, A, i, B, x, y){
+    #print("draw to map")
+    M = split(rock, A, ";")
+    for(i=1; i<=M; i++){
+        split(A[i], B, ",")
+        y = B[1]
+        x = B[2]
+        highest = max(y, highest)
+        map[y][x] = "#"
+    }
+}
+function advance(rock, dy, dx,       M, A, s, i, B, x, y){
+    M = split(rock, A, ";")
+    s = ""
+    for(i=1; i<=M; i++){
+        split(A[i], B, ",")
+        y = B[1]-dy
+        x = B[2]+dx
+        s = s ";" y "," x
+    }
+    return(substr(s, 2))
+}
+function gravity_check(rock, dy, dx,        M, A, i, B, x, y){
+    #print("gravity check")
+    #check if we can go down one
+    M = split(rock, A, ";")
+    for(i=1; i<=M; i++){
+        split(A[i], B, ",")
+        y = B[1]
+        x = B[2]
+        if((y-dy) < 1){
+            return(0)}
+        if((x+dx) < 1){
+            return(0)}
+        if((x+dx) > 7){
+            return(0)
+        }
+        if(((y-dy) in map) && ((x+dx) in map[y-dy])){
+            return(0)
+        }
+    }
+    return(1)
+}
