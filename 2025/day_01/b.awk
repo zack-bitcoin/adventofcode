@@ -14,7 +14,6 @@ BEGIN {
     }
     #print("position " position " acc " acc)
 }
-
 function clicks_up(x){
     if(x == 0){ return(0)}
     position += 1
@@ -33,9 +32,7 @@ function clicks_down(x){
     }
     return(clicks_down(x - 1))
 }
-
 END {
-
     #print(position)
     print(acc)
 }
