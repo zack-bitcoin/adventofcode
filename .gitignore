@@ -24,3 +24,5 @@ input
 *.jpg
 *.txt
 *.gif
+*.exec
+/#*

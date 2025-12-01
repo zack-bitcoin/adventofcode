@@ -5,8 +5,6 @@ BEGIN {
 {
     letter = substr($0, 1, 1)
     distance = substr($0, 2)
-    position0 = position
-    acc0 = acc
     direction = 1
     if(letter == "L"){
         direction = -1
