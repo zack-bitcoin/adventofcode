@@ -1,6 +1,10 @@
 #include <stdio.h>
 int position, acc;
 int clicks(int x, int n){
+  if(x > 99){
+    acc += 1;
+    return(clicks(x-100, n));
+  };
   if(x == 0){
     return(0);
   }

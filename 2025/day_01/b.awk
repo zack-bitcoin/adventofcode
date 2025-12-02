@@ -12,7 +12,20 @@ BEGIN {
     clicks(distance, direction)
 }
 function clicks(x, n,        i){
+    if(x > 99){
+        acc += 1
+        return(clicks(x-100, n))
+    }
     if(x == 0){ return(0)}
+#    for(i=1; i<=x; i++){
+#    print("click " position)
+#        position += n
+#        position = (100 + position) % 100
+#        if(position == 0){
+#            acc += 1
+#        }
+#    }
+#    print("click " position)
     position += n
     position = (100 + position) % 100
     if(position == 0){
