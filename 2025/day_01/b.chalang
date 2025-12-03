@@ -1,0 +1,6 @@
+macro [ nil ;
+macro , swap cons ;
+macro ] swap cons reverse ;
+
+[ -14, -46, -44]
+print

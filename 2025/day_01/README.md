@@ -9,3 +9,11 @@ to run it
 to run awk code
 
 ```awk -f a.awk input```
+
+to run prolog code
+
+```gprolog
+[b].
+main.
+
+```
