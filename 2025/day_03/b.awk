@@ -1,11 +1,9 @@
 #rank 1113
 #time 17:39
-
 BEGIN{
     sum = 0
     line = 1
 }
-
 {
     print(line)
     line+=1
@@ -14,7 +12,6 @@ BEGIN{
 END{
     print(sum)
 }
-
 function max_joltage(s, digits,       l, f, f2, s2){
     if(digits == 0){return("")}
     l = length(s)
@@ -23,7 +20,6 @@ function max_joltage(s, digits,       l, f, f2, s2){
     s2 = f2 substr(s, l-digits+2)
     return(substr(f2, 1, 1) max_joltage(substr(s2, 2), digits-1))
 }
-
 function highest_digit(s,       max_val, l, i){
     max_val = 0
     l = length(s)

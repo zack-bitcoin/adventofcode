@@ -1,11 +1,9 @@
 #rank 818
 #time 6:58
-
 BEGIN{
     sum = 0
     line = 1
 }
-
 {
     print(line)
     line+=1

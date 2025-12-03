@@ -1,0 +1,1 @@
+gcc -Wall -Wextra -std=c99 -O0 -o $1.exec $1
