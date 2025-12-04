@@ -78,15 +78,14 @@ function make_image() {
     for(y=0; y<height; y++){
         for(x=0; x<width; x++){
             g = Grid[y+1][x+1]
-            if(g == "@"){ color = "2"
-            } else if(g == "."){ color = "1"
-            } else if(g == "x"){ color = "0"
-            }
+            if(g == "@"){ color = "2"}
+            else if(g == "."){ color = "1"}
+            else if(g == "x"){ color = "0"}
             s = s color "\n"
         }
     }
     filename = "frame" (10000 + frame_number)
     frame_number += 1
-    print(s) > (filename ".txt")
-    system("convert "filename".txt "filename".jpg")
+    print(s) > (filename ".ppm")
+    system("convert "filename".ppm "filename".jpg")
 }
