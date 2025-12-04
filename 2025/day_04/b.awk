@@ -2,12 +2,20 @@
 #rank 2819
 
 BEGIN{
-    frame_number = 0
+    frame_number = 1
 }
 {
     Cols = length($0)
-    for(i=1; i<=Cols; i++)
-        Grid[NR][i] = substr($0, i, 1)
+    for(i=1; i<=Cols; i++){
+        letter = substr($0, i, 1)
+        Grid[NR][i] = letter
+        if(letter == "."){
+           ranking[NR][i] = 0
+        } else {
+           ranking[NR][i] = 1
+        }
+    }
+    
 }
 END{
     mainloop()
@@ -15,11 +23,51 @@ END{
     system("sleep 0.5")
     system("convert -delay 10 -loop 0 frame*.jpg vid.mp4")
     system("rm frame*")
-    print("now convert to gif\n")
+    print("now convert first to gif\n")
     system("convert vid.mp4 vid.gif")
+    for(i=1; i<= NR; i++){
+        s = ""
+        for(j=1; j<=Cols; j++){
+            s = s " " ranking[i][j]
+        }
+        #print(s)
+    }
+    highest_frame = frame_number
+    width = Cols
+    height = NR
+    if((height % 2) == 1)
+        height += 1
+    if((width % 2) == 1)
+        width += 1
+    print("build rainbow " highest_frame)
+    for(i=1; i<=(frame_number); i++){
+        filename = "rainbow" (10000 + i)
+        s = "P2\n"width " " height"\n"highest_frame"\n"
+        for(y=0; y<height; y++){
+            for(x=0; x<width; x++){
+                r = ranking[y+1][x+1]+0
+                if(r == 0){
+                    #s = s r "\n"
+                    s = s highest_frame "\n"
+                } else {
+                    r2 = (r - i + (5*highest_frame)) % highest_frame
+                    r2 = highest_frame - r2 -1
+                    s = s r2 "\n"
+                }
+            }
+        }
+        print(s) > (filename ".ppm")
+        system("convert "filename".ppm "filename".jpg")
+        system("rm " filename".ppm ")
+    }
+    system("sleep 0.5")
+    system("convert -delay 10 -loop 0 rainbow*.jpg rainbow_vid.mp4")
+    system("rm rainbow*.jpg")
+    print("convert second to gif")
+    system("convert rainbow_vid.mp4 rainbow_vid.gif")
 }
 function mainloop(){
-    result = round()
+    result = step()
     make_image()
     sum += result
     clear()
@@ -32,13 +80,14 @@ function clear(        i, j, g) {
             if(Grid[i][j] == "x")
                 Grid[i][j] = "."
 }
-function round(      result, i, j, M){
+function step(      result, i, j, M){
     result = 0
     for(i=1; i<=NR; i++)
         for(j=1; j<=Cols; j++)
             if(Grid[i][j] == "@")
                 if(many_neighbors(i, j) < 5){
                     Grid[i][j] = "x"
+                    ranking[i][j] = frame_number
                     result += 1
                 }
     return(result)
