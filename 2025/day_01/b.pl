@@ -1,6 +1,7 @@
 main :-
     open('input', read, Stream),
     mainloop(Stream, 50, Result),
+    close(Stream),
     nl,
     print(Result).
 mainloop(Stream, Position, Acc2) :-

@@ -15,12 +15,14 @@ END{
 function max_joltage(s, digits,       l, f, f2, s2){
     if(digits == 0){return("")}
     l = length(s)
-    f = substr(s, 1, l-digits+1)
+    f = substr(s, 1, l-digits+1)#remove the suffix not being used to find the next digit.
     f2 = highest_digit(f)
     s2 = f2 substr(s, l-digits+2)
     return(substr(f2, 1, 1) max_joltage(substr(s2, 2), digits-1))
 }
 function highest_digit(s,       max_val, l, i){
+    #finds the biggest digit in the list. earlier digits win ties.
+    #returns the part of the list we are still considering for further digits. The first digit of this list is the next digit of the output.
     max_val = 0
     l = length(s)
     for(i=1; i<=l; i++){
