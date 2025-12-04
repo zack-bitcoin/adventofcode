@@ -1,15 +1,13 @@
 # 00:20:05
 #rank 2819
 
-#roll is accessible if fewer than 4 adjacent tiles are rolls
 BEGIN{
     frame_number = 0
 }
 {
     Cols = length($0)
-    for(i=1; i<=Cols; i++){
+    for(i=1; i<=Cols; i++)
         Grid[NR][i] = substr($0, i, 1)
-    }
 }
 END{
     mainloop()
@@ -25,7 +23,6 @@ function mainloop(){
     make_image()
     sum += result
     clear()
-    #make_image()
     if(result > 0)
         mainloop()
 }
