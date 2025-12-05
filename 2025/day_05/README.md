@@ -1,7 +1,9 @@
+store your input data in a file called "input"
+
 run the awk code
 ```
 awk -f a.awk input
-awk -f b.awk input
+sh b_awk
 ```
 
 compile the C code
@@ -11,7 +13,7 @@ sh compile_all
 
 run the C code
 ```
-awk -f b_c.awk input
+sh b_c
 ```
 
 

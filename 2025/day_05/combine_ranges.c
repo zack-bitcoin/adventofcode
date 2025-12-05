@@ -11,27 +11,30 @@ long long max(long long a, long long b){
   if(a > b){return(a);}
   return(b);
 }
-int try_combine(long long start, long long end, int line, int NR){
+int try_combine(long long start, long long end, int line, int NR)
+{
   if(line > NR){
     printf("%llu %llu\n", start, end);
     return(line+1);
   }
   if(end >= Starts[line]){
-    return(try_combine(min(start, Starts[line]), max(end, Ends[line]), line+1, NR));
+    return(try_combine(min(start, Starts[line]),
+                       max(end, Ends[line]), line+1, NR));
   } else {
     printf("%llu %llu\n", start, end);
     return(line);
   }
 }
-
-int print_result_unused(int line, int NR){
+int print_result_unused(int line, int NR)
+{
   if(line >= NR){
     return(0);
   }
   printf("%llu %llu\n", Starts[line], Ends[line]);
   return(print_result_unused(line+1, NR));
 }
-int print_result(int line, int NR){
+int print_result(int line, int NR)
+{
   if(line == NR){
     printf("%llu %llu\n", Starts[NR], Ends[NR]);
   }
@@ -41,8 +44,8 @@ int print_result(int line, int NR){
   int line2 = try_combine(Starts[line], Ends[line], line+1, NR);
   return(print_result(line2, NR));
 }
-
-int main(){
+int main()
+{
   int c;
   c = getchar();
   int line = 1;
@@ -69,5 +72,3 @@ int main(){
   print_result(1, line-1);
   return(0);
 }
-
-
