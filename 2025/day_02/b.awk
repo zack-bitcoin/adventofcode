@@ -4,7 +4,6 @@ BEGIN{
 {
     M = split($0, A, ",")
     for(i=1; i<=M; i++){
-        #print(A[i])
         split(A[i], B, "-")
         start = B[1]
         end = B[2]
@@ -12,11 +11,9 @@ BEGIN{
         print("sum is " sum)
     }
 }
-
 END{
     print("result " sum)
 }
-
 function scan(start, end,     r, i){
     r = 0;
     for(i=start; i<= end; i++){
@@ -26,7 +23,6 @@ function scan(start, end,     r, i){
     }
     return(r);
 }
-
 function is_invalid(n,     l, i){
     l = length(n)
     for(i=1; i<l; i++){
