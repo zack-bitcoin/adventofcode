@@ -3,10 +3,6 @@
 long long Starts[Buff];
 long long Ends[Buff];
 
-long long min(long long a, long long b){
-  if(a < b){return(a);}
-  return(b);
-}
 long long max(long long a, long long b){
   if(a > b){return(a);}
   return(b);
@@ -18,8 +14,7 @@ int try_combine(long long start, long long end, int line, int NR)
     return(line+1);
   }
   if(end >= Starts[line]){
-    return(try_combine(min(start, Starts[line]),
-                       max(end, Ends[line]), line+1, NR));
+    return(try_combine(start, max(end, Ends[line]), line+1, NR));
   } else {
     printf("%llu %llu\n", start, end);
     return(line);
