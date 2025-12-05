@@ -1,0 +1,3 @@
+BEGIN{
+    system("cat input | awk -f get_ranges.awk | sort -n | awk -f combine_ranges.awk | awk -f sum_range_sizes.awk")
+}
