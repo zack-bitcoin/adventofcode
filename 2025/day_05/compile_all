@@ -1,0 +1,3 @@
+sh compile get_ranges.c
+sh compile combine_ranges.c
+sh compile sum_range_sizes.c
