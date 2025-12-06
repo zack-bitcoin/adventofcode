@@ -39,6 +39,7 @@ END{
     print("result is: " sum)
 }
 function apply(s,     M, A, x, i) {
+    #example: 10 = apply("+ 1 2 3 4") 
     M = split(s, A, " ")
     if(A[1] == "*"){
         x = 1
