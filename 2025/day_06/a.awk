@@ -1,11 +1,10 @@
 #rank 2284
 #time 12:18
-
 BEGIN{
     num_rows = 0
 }
-
 /[*]/ {
+    #store the operators in order
     Width = split($0, A, /[ ]+/)
     pos = 1
     for(i=1; i<=Width; i++){
@@ -15,8 +14,8 @@ BEGIN{
         }
     }
 }
-
 /[0-9]/ {
+    #store the numbers in order for each row.
     num_rows += 1
     Width = split($0, A, /[ ]+/)
     pos = 1
@@ -27,7 +26,6 @@ BEGIN{
         }
     }
 }
-
 END{
     for(i=1; i<=Width; i++){
         s = Ops[i]
@@ -40,7 +38,6 @@ END{
     }
     print("result is: " sum)
 }
-
 function apply(s,     M, A, x, i) {
     M = split(s, A, " ")
     if(A[1] == "*"){
