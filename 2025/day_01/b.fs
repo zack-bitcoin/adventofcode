@@ -1,17 +1,13 @@
 input
 
-var position
-50 position !
-
+var position 50 position !
 var acc
-
-var limit
-0 line limit !
+var limit 0 line limit !
 
 : fix-position position @ 100 % 100 + 100 % 
-  0 = if acc @ 1 + acc ! else then #landed on zero! update the accumulator.
-position ! ;
-
+  0 = if acc @ 1 + acc ! else then
+  position !
+;
 : main .s
   limit @ 1 - >
   if
@@ -30,10 +26,8 @@ position ! ;
     recurse
     then
 ;
-
 : clicks #steps, direction --
    #take this many steps in this direction.
-   #." clicks start " .s drop 
    swap #d s 
    1 < if #d s
      drop return
@@ -47,7 +41,5 @@ position ! ;
      recurse
    then
  ;
-
-
 1 main call
 acc @ .s
