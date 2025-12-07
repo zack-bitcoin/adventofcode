@@ -17,3 +17,11 @@ to run prolog code
 main.
 
 ```
+
+to run forth code
+```
+awk -f ../../language/forth.awk a.fs
+```
+```
+awk -f ../../language/forth.awk b.fs
+```
