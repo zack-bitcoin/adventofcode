@@ -9,19 +9,19 @@
 END{
     print("many nodes = " NR)
     print("make pairs")
-    file = "pairs.txt"
-    system("rm " file)
+    p_file = "pairs.txt"
+    system("rm " p_file)
     for(i=1; i<=(NR-1); i++){
 	for(j=i+1; j<=NR; j++){
 	    D = distance(Data[i, 1], Data[i, 2], Data[i, 3],
 			 Data[j, 1], Data[j, 2], Data[j, 3])
-	    print(D " " i " " j) >> file
+	    print(D " " i " " j) >> p_file
 	}
     }
     print("sort pairs")
-    file2 = "sorted_pairs.txt"
-    system("rm " file2)
-    system("cat " file " | sort -n > " file2)
+    sp_file = "sorted_pairs.txt"
+    system("rm " sp_file)
+    system("cat " p_file " | sort -n > " sp_file)
     circuits = ""
     for(i=1; i<=NR; i++){
 	circuits = circuits ";" i
@@ -29,17 +29,15 @@ END{
     circuits = substr(circuits, 2)
     print("connect pairs")
     while(!(many_circuits == 2)){
-	getline line < file2
+	getline line < sp_file
         split(line, A, " ")
-	last_connection_1 = A[2]
-	last_connection_2 = A[3]
         circuits = connect(A[2], A[3], circuits)
 	many_circuits = split(circuits, A, ";")
     }
     First = A[1]
     c=1
     while(c){
-	getline line < file2
+	getline line < sp_file
 	split(line, A, " ")
 	if(A[2] == First){
 	    Second = A[3]
@@ -59,8 +57,8 @@ function connect(n, m, circuits,     M, A, i, Ca, Cb, circuits2){
 	Ca = contains(A[i], n)
 	Cb = contains(A[i], m)
 	if(Ca && Cb){
-	    return(circuits)
-	} else if(Ca || Cb){
+	    return(circuits) #already connected
+	} else if(Ca || Cb){ 
 	    combo = combo "," A[i]
 	} else {
 	    circuits2 = circuits2 ";" A[i]
