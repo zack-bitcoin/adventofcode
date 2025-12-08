@@ -13,7 +13,6 @@ BEGIN {
         acc += 1
     }
 }
-
 END {
     print(acc)
 }
