@@ -1,4 +1,3 @@
-#rank 818
 #time 6:58
 BEGIN{
     sum = 0

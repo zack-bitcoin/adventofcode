@@ -1,5 +1,4 @@
 # 00:10:00
-# rank 1069
 
 #roll is accessible if fewer than 4 adjacent tiles are rolls
 {

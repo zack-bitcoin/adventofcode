@@ -1,21 +1,12 @@
 #rank 2457
 #time 50:37
-
-BEGIN{
-}
-
 {
     split($0, A, ",")
     Data[NR, 1] = A[1]
     Data[NR, 2] = A[2]
     Data[NR, 3] = A[3]
 }
-
 END{
-    #print(Data[73, 1] * Data[673, 1])
-    #exit
-
-
     print("many nodes = " NR)
     print("make pairs")
     file = "pairs.txt"
@@ -37,46 +28,30 @@ END{
     }
     circuits = substr(circuits, 2)
     print("connect pairs")
-    #for(i=1; i<=PairsToConnect; i++){
-    while(!(many_circuits == 1)){
-	#print(circuits)
+    while(!(many_circuits == 2)){
 	getline line < file2
-	#print(line)
         split(line, A, " ")
-	print("many_circuits " many_circuits " " A[2] " " A[3])
-	if(many_circuits < 3){
-	    print(circuits)
-	}
 	last_connection_1 = A[2]
 	last_connection_2 = A[3]
         circuits = connect(A[2], A[3], circuits)
-	many_circuits = split(circuits, Unused, ";")
+	many_circuits = split(circuits, A, ";")
     }
-    #73 with 675
-    print(last_connection_1 " " last_connection_2)
-    exit
-    print(circuits)
-    M = split(circuits, A, ";")
-    sf = "sizes.txt"
-    system("rm " sf)
-    sizes = ""
-    for(i=1; i<=M; i++){
-	N = split(A[i], B, ",")
-	print(N) >> sf
+    First = A[1]
+    c=1
+    while(c){
+	getline line < file2
+	split(line, A, " ")
+	if(A[2] == First){
+	    Second = A[3]
+	    c = 0
+	} else if(A[3] == First){
+	    Second = A[2]
+	    c = 0
+	}
     }
-    ss = "sorted_sizes.txt"
-    system("cat "sf " | sort -r -n > "ss)
-    acc = 1
-    for(i=1; i<=3; i++){
-	getline line < ss
-	acc = acc * line
-    }
-    print("result " acc)
-    #connect the 10 shortest connections. multiply the sizes of all the circuits.
+    print("result: " Data[First, 1] * Data[Second, 1])
 }
-
 function connect(n, m, circuits,     M, A, i, Ca, Cb, circuits2){
-    #print("connect " n " " m " in " circuits)
     M = split(circuits, A, ";")
     circuits2 = ""
     combo = ""
@@ -91,22 +66,18 @@ function connect(n, m, circuits,     M, A, i, Ca, Cb, circuits2){
 	    circuits2 = circuits2 ";" A[i]
 	}
     }
-    #print("combo " combo)
     circuits2 = substr(circuits2, 2) ";" substr(combo, 2)
     return(circuits2)
 }
-
 function contains(C, n,         M, A, i){
     M = split(C, A, ",")
     for(i=1; i<=M; i++){
-	#print("contains " A[i] " " n)
        if(A[i] == n){
            return(1)
        }
     }
     return(0)
 }
-
 function distance(x1, y1, z1, x2, y2, z2,     xd, yd, zd){
     xd = ((x2-x1) ^ 2)
     yd = ((y2-y1) ^ 2)

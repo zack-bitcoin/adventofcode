@@ -1,4 +1,3 @@
-#rank 2284
 #time 12:18
 BEGIN{
     num_rows = 0

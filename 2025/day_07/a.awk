@@ -1,4 +1,4 @@
-#rank 1205
+
 #time 14:25
 /S/ {
     Cols = length($0)
