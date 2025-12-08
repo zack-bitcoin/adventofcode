@@ -1,18 +1,15 @@
 #rank 2448
 #time 40:47
-
 BEGIN{
     #PairsToConnect = 10
     PairsToConnect = 1000
 }
-
 {
     split($0, A, ",")
     Data[NR, 1] = A[1]
     Data[NR, 2] = A[2]
     Data[NR, 3] = A[3]
 }
-
 END{
     print("many nodes = " NR)
     print("make pairs")
@@ -36,13 +33,10 @@ END{
     circuits = substr(circuits, 2)
     print("connect pairs")
     for(i=1; i<=PairsToConnect; i++){
-	#print(circuits)
 	getline line < file2
-	#print(line)
         split(line, A, " ")
         circuits = connect(A[2], A[3], circuits)
     }
-    print(circuits)
     M = split(circuits, A, ";")
     sf = "sizes.txt"
     system("rm " sf)
@@ -59,11 +53,8 @@ END{
 	acc = acc * line
     }
     print("result " acc)
-    #connect the 10 shortest connections. multiply the sizes of all the circuits.
 }
-
 function connect(n, m, circuits,     M, A, i, Ca, Cb, circuits2){
-    #print("connect " n " " m " in " circuits)
     M = split(circuits, A, ";")
     circuits2 = ""
     combo = ""
@@ -78,22 +69,18 @@ function connect(n, m, circuits,     M, A, i, Ca, Cb, circuits2){
 	    circuits2 = circuits2 ";" A[i]
 	}
     }
-    #print("combo " combo)
     circuits2 = substr(circuits2, 2) ";" substr(combo, 2)
     return(circuits2)
 }
-
 function contains(C, n,         M, A, i){
     M = split(C, A, ",")
     for(i=1; i<=M; i++){
-	#print("contains " A[i] " " n)
        if(A[i] == n){
            return(1)
        }
     }
     return(0)
 }
-
 function distance(x1, y1, z1, x2, y2, z2,     xd, yd, zd){
     xd = ((x2-x1) ^ 2)
     yd = ((y2-y1) ^ 2)
