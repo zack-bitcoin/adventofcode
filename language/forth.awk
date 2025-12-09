@@ -262,5 +262,4 @@ function print_stack(        s, k){
 	s = s ", " S[k]
     }
     print(substr(s, 2))
-
 }

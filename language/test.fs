@@ -4,7 +4,7 @@ example
 
 #return
 
-: grow 1000 < if drop dup * recurse else drop then ;
+: grow 1000 < if drop dup * grow call else drop then ;
 
 2 grow call
 
